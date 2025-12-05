@@ -10,7 +10,11 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository
 
     public UserRepository(MyRecipeBookDbContext dbContext) => _dbContext = dbContext;
 
+    
     public async Task Add(User user) => await _dbContext.Users.AddAsync(user);
 
+
     public async Task<bool> ExistActiveUserWithEmail(string email) => await _dbContext.Users.AnyAsync(u => u.Email.Equals(email) && u.Active);
+
+
 }
