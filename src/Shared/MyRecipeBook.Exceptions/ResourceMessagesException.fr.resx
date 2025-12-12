@@ -19,21 +19,30 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="NAME_EMPTY" xml:space="preserve">
-        <value>O nome não pode estar vazio.</value>
+        <value>Le nom ne peut pas être vide.</value>
     </data>
     <data name="PASSWORD_EMPTY" xml:space="preserve">
-        <value>A senha deve ter mais de 6 caracteres.</value>
+        <value>Le mot de passe doit comporter plus de 6 caractères.</value>
     </data>
     <data name="EMAIL_INVALID" xml:space="preserve">
-        <value>O e-mail é inválido.</value>
+        <value>L'adresse e-mail est invalide.</value>
     </data>
     <data name="EMAIL_EMPTY" xml:space="preserve">
-        <value>O e-mail não pode estar vazio.</value>
+        <value>L'adresse e-mail ne peut pas être vide.</value>
     </data>
     <data name="UNKNOWN_ERROR" xml:space="preserve">
-        <value>Erro desconhecido.</value>
+        <value>Erreur inconnue.</value>
     </data>
     <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
-        <value>E-mail já está registrado.</value>
+        <value>Cette adresse e-mail est déjà enregistrée.</value>
+    </data>
+    <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+        <value>Adresse e-mail et/ou mot de passe invalides.</value>
+    </data>
+    <data name="NO_TOKEN" xml:space="preserve">
+        <value>La requête ne contient aucun jeton.</value>
+    </data>
+    <data name="USER_WITHOUT_PERMISSION_ACCESS_RESOURCE" xml:space="preserve">
+        <value>L'utilisateur n'est pas autorisé à accéder à ces informations.</value>
     </data>
 </root>

@@ -26,6 +26,11 @@ public class ExceptionFilter : IExceptionFilter
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Result = new BadRequestObjectResult(new ResponseErrorJson(exception!.ErrorMessages));
         }
+        else if (context.Exception is InvalidLoginException)
+        {
+            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            context.Result = new UnauthorizedObjectResult(new ResponseErrorJson(context.Exception.Message));
+        }
     }
     
     private static void ThrowUnknownException(ExceptionContext context)
@@ -33,6 +38,6 @@ public class ExceptionFilter : IExceptionFilter
         var exception = context.Exception as ErrorOnValidationException;
             
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-        context.Result = new ObjectResult(new ResponseErrorJson(ResourceMessagesExeption.UNKNOWN_ERROR));
+        context.Result = new ObjectResult(new ResponseErrorJson(ResourceMessagesException.UNKNOWN_ERROR));
     }
 }

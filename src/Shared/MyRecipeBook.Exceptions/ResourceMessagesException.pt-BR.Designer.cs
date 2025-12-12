@@ -21,14 +21,14 @@ namespace MyRecipeBook.Exceptions {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ResourceMessagesExeption {
+    public class ResourceMessagesException_pt_BR {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResourceMessagesExeption() {
+        internal ResourceMessagesException_pt_BR() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace MyRecipeBook.Exceptions {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyRecipeBook.Exceptions.ResourceMessagesExeption", typeof(ResourceMessagesExeption).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyRecipeBook.Exceptions.ResourceMessagesException.pt-BR", typeof(ResourceMessagesException_pt_BR).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,7 +60,7 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This email is already registered..
+        ///   Looks up a localized string similar to E-mail já está registrado..
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
             get {
@@ -69,7 +69,7 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The email must not be empty..
+        ///   Looks up a localized string similar to O e-mail não pode estar vazio..
         /// </summary>
         public static string EMAIL_EMPTY {
             get {
@@ -78,7 +78,7 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The email is invalid..
+        ///   Looks up a localized string similar to O e-mail é inválido..
         /// </summary>
         public static string EMAIL_INVALID {
             get {
@@ -87,7 +87,16 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name must not be empty..
+        ///   Looks up a localized string similar to E-mail e/ou senha inválidos..
+        /// </summary>
+        public static string EMAIL_OR_PASSWORD_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_OR_PASSWORD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O nome não pode estar vazio..
         /// </summary>
         public static string NAME_EMPTY {
             get {
@@ -96,7 +105,16 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The password must be longer than 6 characters..
+        ///   Looks up a localized string similar to Requisição não tem token..
+        /// </summary>
+        public static string NO_TOKEN {
+            get {
+                return ResourceManager.GetString("NO_TOKEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha deve ter mais de 6 caracteres..
         /// </summary>
         public static string PASSWORD_EMPTY {
             get {
@@ -105,11 +123,20 @@ namespace MyRecipeBook.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown error..
+        ///   Looks up a localized string similar to Erro desconhecido..
         /// </summary>
         public static string UNKNOWN_ERROR {
             get {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuário sem permissão para acesso..
+        /// </summary>
+        public static string USER_WITHOUT_PERMISSION_ACCESS_RESOURCE {
+            get {
+                return ResourceManager.GetString("USER_WITHOUT_PERMISSION_ACCESS_RESOURCE", resourceCulture);
             }
         }
     }
