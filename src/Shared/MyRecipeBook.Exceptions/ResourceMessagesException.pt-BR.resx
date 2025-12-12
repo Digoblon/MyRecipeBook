@@ -19,21 +19,30 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="NAME_EMPTY" xml:space="preserve">
-        <value>Le nom ne peut pas être vide.</value>
+        <value>O nome não pode estar vazio.</value>
     </data>
     <data name="PASSWORD_EMPTY" xml:space="preserve">
-        <value>Le mot de passe doit comporter plus de 6 caractères.</value>
+        <value>A senha deve ter mais de 6 caracteres.</value>
     </data>
     <data name="EMAIL_INVALID" xml:space="preserve">
-        <value>L'adresse e-mail est invalide.</value>
+        <value>O e-mail é inválido.</value>
     </data>
     <data name="EMAIL_EMPTY" xml:space="preserve">
-        <value>L'adresse e-mail ne peut pas être vide.</value>
+        <value>O e-mail não pode estar vazio.</value>
     </data>
     <data name="UNKNOWN_ERROR" xml:space="preserve">
-        <value>Erreur inconnue.</value>
+        <value>Erro desconhecido.</value>
     </data>
     <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
-        <value>Cette adresse e-mail est déjà enregistrée.</value>
+        <value>E-mail já está registrado.</value>
+    </data>
+    <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+        <value>E-mail e/ou senha inválidos.</value>
+    </data>
+    <data name="NO_TOKEN" xml:space="preserve">
+        <value>Requisição não tem token.</value>
+    </data>
+    <data name="USER_WITHOUT_PERMISSION_ACCESS_RESOURCE" xml:space="preserve">
+        <value>Usuário sem permissão para acesso.</value>
     </data>
 </root>

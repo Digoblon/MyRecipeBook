@@ -31,7 +31,7 @@ public class RegisterUserValidatorTest
         var result = validator.Validate(request);
         
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesExeption.NAME_EMPTY));
+        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesException.NAME_EMPTY));
     }
     
     [Fact]
@@ -46,7 +46,7 @@ public class RegisterUserValidatorTest
         
         result.IsValid.Should().BeFalse();
         
-        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesExeption.EMAIL_EMPTY));
+        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesException.EMAIL_EMPTY));
     }
     
     [Fact]
@@ -61,7 +61,7 @@ public class RegisterUserValidatorTest
         
         result.IsValid.Should().BeFalse();
         
-        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesExeption.EMAIL_INVALID));
+        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesException.EMAIL_INVALID));
     }
     
     [Theory]
@@ -80,6 +80,21 @@ public class RegisterUserValidatorTest
         
         result.IsValid.Should().BeFalse();
         
-        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesExeption.PASSWORD_EMPTY));
+        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesException.INVALID_PASSWORD));
+    }
+    
+    [Fact]
+    public void Error_Password_Empty()
+    {
+        var validator = new RegisterUserValidator();
+
+        var request = RequestRegisterUserJsonBuilder.Build();
+        request.Password = string.Empty;
+
+        var result = validator.Validate(request);
+        
+        result.IsValid.Should().BeFalse();
+        
+        result.Errors.Should().ContainSingle().And.Contain(e=> e.ErrorMessage.Equals(ResourceMessagesException.PASSWORD_EMPTY));
     }
 }

@@ -6,6 +6,8 @@ using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
+using MyRecipeBook.Domain.Security.Cryptography;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exceptions;
 using MyRecipeBook.Exceptions.ExecptionsBase;
 
@@ -17,19 +19,22 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserWriteOnlyRepository  _writeOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly PasswordEncrypter _passwordEncrypter;
+    private readonly IPasswordEncrypter _passwordEncrypter;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
 
     public RegisterUserUseCase(IUserReadOnlyRepository readOnlyRepository, 
         IUserWriteOnlyRepository  writeOnlyRepository, 
-        PasswordEncrypter passwordEncrypter,
+        IPasswordEncrypter passwordEncrypter,
         IUnitOfWork unitOfWork,
-        IMapper mapper)
+        IMapper mapper,
+        IAccessTokenGenerator accessTokenGenerator)
     {
         _readOnlyRepository = readOnlyRepository;
         _writeOnlyRepository = writeOnlyRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _passwordEncrypter = passwordEncrypter;
+        _accessTokenGenerator = accessTokenGenerator;
     }
     
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
@@ -42,6 +47,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         //mapear a request em uma entidade
         var user = _mapper.Map<Domain.Entities.User>(request);
         user.Password = _passwordEncrypter.Encrypt(request.Password);
+        user.UserIdentifier = Guid.NewGuid();
         
         //salvar no banco de dados
         await _writeOnlyRepository.Add(user);
@@ -51,6 +57,10 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         return new ResponseRegisteredUserJson
         {
             Name = request.Name,
+            Tokens =  new ResponseTokensJson
+            {
+                AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+            }
         };
     }
 
@@ -62,7 +72,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         
         var emailExist = await _readOnlyRepository.ExistActiveUserWithEmail(request.Email);
         if (emailExist)
-            result.Errors.Add(new ValidationFailure(string.Empty,ResourceMessagesExeption.EMAIL_ALREADY_REGISTERED));
+            result.Errors.Add(new ValidationFailure(string.Empty,ResourceMessagesException.EMAIL_ALREADY_REGISTERED));
         
 
         if (!result.IsValid)
