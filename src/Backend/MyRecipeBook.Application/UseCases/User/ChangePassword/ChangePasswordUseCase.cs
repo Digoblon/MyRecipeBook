@@ -5,6 +5,7 @@ using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Domain.Security.Cryptography;
 using MyRecipeBook.Domain.Services.LoggedUser;
 using MyRecipeBook.Exceptions;
+using MyRecipeBook.Exceptions.ExceptionsBase;
 using MyRecipeBook.Exceptions.ExecptionsBase;
 
 namespace MyRecipeBook.Application.UseCases.User.ChangePassword;

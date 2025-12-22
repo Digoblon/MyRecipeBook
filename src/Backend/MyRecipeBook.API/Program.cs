@@ -17,7 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options => 
+{
+    options.OperationFilter<IdsFilter>();
+    
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
         Type = SecuritySchemeType.ApiKey,
         In = ParameterLocation.Header,

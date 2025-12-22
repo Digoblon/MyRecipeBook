@@ -8,6 +8,7 @@ using MyRecipeBook.Application.UseCases.User.ChangePassword;
 using MyRecipeBook.Application.UseCases.User.Update;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Exceptions;
+using MyRecipeBook.Exceptions.ExceptionsBase;
 using MyRecipeBook.Exceptions.ExecptionsBase;
 
 namespace UseCases.Test.User.ChangePassword;
@@ -49,8 +50,7 @@ public class ChangePasswordUseCaseTest
         Func<Task> act = async () => { await useCase.Execute(request); };
 
         (await act.Should().ThrowAsync<ErrorOnValidationException>())
-            .Where(e => e.ErrorMessages.Count == 1 &&
-                        e.ErrorMessages.Contains(ResourceMessagesException.PASSWORD_EMPTY));
+            .Where(e => e.GetErrorMessages().Count == 1 && e.GetErrorMessages().Contains(ResourceMessagesException.PASSWORD_EMPTY));
 
         var passwordEncrypter = PasswordEncrypterBuilder.Build();
         
@@ -69,8 +69,7 @@ public class ChangePasswordUseCaseTest
         Func<Task> act = async () => { await useCase.Execute(request); };
 
         await act.Should().ThrowAsync<ErrorOnValidationException>()
-            .Where(e => e.ErrorMessages.Count == 1 &&
-                        e.ErrorMessages.Contains(ResourceMessagesException.PASSWORD_DIFFERENT_CURRENT_PASSWORD));
+            .Where(e => e.GetErrorMessages().Count == 1 && e.GetErrorMessages().Contains(ResourceMessagesException.PASSWORD_DIFFERENT_CURRENT_PASSWORD));
 
         var passwordEncrypter = PasswordEncrypterBuilder.Build();
         

@@ -9,9 +9,10 @@ public class MyRecipeBookClassFixture : IClassFixture<CustomWebApplicationFactor
     private readonly HttpClient _httpClient;
     public MyRecipeBookClassFixture(CustomWebApplicationFactory factory) =>  _httpClient = factory.CreateClient();
 
-    protected async Task<HttpResponseMessage> DoPost(string method, object request, string culture = "en")
+    protected async Task<HttpResponseMessage> DoPost(string method, object request,string token = "", string culture = "en")
     {
         ChangeRequestCulture(culture);
+        AuthorizeRequest(token);
         
         return await _httpClient.PostAsJsonAsync(method,request);
     }
@@ -20,7 +21,7 @@ public class MyRecipeBookClassFixture : IClassFixture<CustomWebApplicationFactor
     {
         ChangeRequestCulture(culture);
         AuthorizeRequest(token);
-        
+
         return await _httpClient.GetAsync(method);
     }
     
@@ -30,6 +31,14 @@ public class MyRecipeBookClassFixture : IClassFixture<CustomWebApplicationFactor
         AuthorizeRequest(token);
         
         return await _httpClient.PutAsJsonAsync(method, request);
+    }
+
+    protected async Task<HttpResponseMessage> DoDelete(string method, string token, string culture = "en")
+    {
+        ChangeRequestCulture(culture);
+        AuthorizeRequest(token);
+        
+        return await _httpClient.DeleteAsync(method);
     }
 
     private void ChangeRequestCulture(string culture)

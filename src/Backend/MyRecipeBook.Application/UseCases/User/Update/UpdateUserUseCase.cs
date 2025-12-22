@@ -3,6 +3,7 @@ using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Domain.Services.LoggedUser;
 using MyRecipeBook.Exceptions;
+using MyRecipeBook.Exceptions.ExceptionsBase;
 using MyRecipeBook.Exceptions.ExecptionsBase;
 
 
@@ -59,7 +60,7 @@ public class UpdateUserUseCase : IUpdateUserUseCase
         if (!result.IsValid)
         {
             var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-            
+
             throw new ErrorOnValidationException(errorMessages);
         }
     }

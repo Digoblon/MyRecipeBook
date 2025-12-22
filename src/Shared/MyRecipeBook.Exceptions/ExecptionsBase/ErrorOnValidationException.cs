@@ -1,11 +1,18 @@
-namespace MyRecipeBook.Exceptions.ExecptionsBase;
+using System.Net;
+using MyRecipeBook.Exceptions.ExecptionsBase;
+
+namespace MyRecipeBook.Exceptions.ExceptionsBase;
 
 public class ErrorOnValidationException : MyRecipeBookException
 {
-    public IList<string> ErrorMessages { get; set; }
-    
-    public ErrorOnValidationException(IList<string> errors) : base(string.Empty)
+    private readonly IList<string> _errorMessages;
+
+    public ErrorOnValidationException(IList<string> errorMessages) : base(string.Empty)
     {
-        ErrorMessages = errors;
+        _errorMessages = errorMessages;
     }
+
+    public override IList<string> GetErrorMessages() => _errorMessages;
+
+    public override HttpStatusCode GetStatusCode() => HttpStatusCode.BadRequest;
 }
