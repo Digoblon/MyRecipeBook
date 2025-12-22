@@ -1,8 +1,10 @@
 using CommonTestUtilities.Entities;
+using CommonTestUtilities.IdEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipeBook.Domain.Enums;
 using MyRecipeBook.Infrastructure.DataAccess;
 
 namespace WebApi.Test;
@@ -10,6 +12,7 @@ namespace WebApi.Test;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     private MyRecipeBook.Domain.Entities.User _user = null!;
+    private MyRecipeBook.Domain.Entities.Recipe _recipe = null!;
     private string _password = string.Empty;
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -48,11 +51,21 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     public string GetName() => _user.Name;
     public Guid GetUserIdentifier() => _user.UserIdentifier;
     
+    public string GetRecipeTitle() => _recipe.Title;
+    public string GetRecipeId() => IdEncrypterBuilder.Build().Encode(_recipe.Id);
+    public Difficulty GetRecipeDifficulty() => _recipe.Difficulty!.Value;
+    public CookingTime GetRecipeCookingTime() => _recipe.CookingTime!.Value;
+    public IList<DishType> GetDishTypes() => _recipe.DishTypes.Select(c=> c.Type).ToList();
+    
+    
     private void StartDatabase(MyRecipeBookDbContext dbContext)
     {
         (_user,_password) = UserBuilder.Build();
+        _recipe = RecipeBuilder.Build(_user);
         
         dbContext.Users.Add(_user);
+        
+        dbContext.Recipes.Add(_recipe);
                 
         dbContext.SaveChanges();
     }

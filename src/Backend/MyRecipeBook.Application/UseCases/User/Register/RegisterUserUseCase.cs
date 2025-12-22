@@ -9,6 +9,7 @@ using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Domain.Security.Cryptography;
 using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exceptions;
+using MyRecipeBook.Exceptions.ExceptionsBase;
 using MyRecipeBook.Exceptions.ExecptionsBase;
 
 namespace MyRecipeBook.Application.UseCases.User.Register;
