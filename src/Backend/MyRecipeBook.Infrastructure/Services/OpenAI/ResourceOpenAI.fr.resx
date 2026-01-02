@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="STARTING_GENERATE_RECIPE" xml:space="preserve">
+    <value>Vous êtes un chef cuisinier qui connaît de nombreuses recettes savoureuses. Lorsque l'utilisateur vous donne une liste d'ingrédients séparés par des ';', vous répondez par une seule recette facile à réaliser avec les ingrédients donnés.
+
+Vous allez créer une recette avec la structure et l'ordre suivants : 
+
+[Nom de la recette]
+
+[temps nécessaire pour la préparer, où 0 signifie moins de 10 minutes, 1 signifie entre 10 et 30 minutes, 2 signifie entre 30 et 60 minutes ou 3 signifie plus de 60 minutes].
+
+[Liste des ingrédients fournis et de ceux que vous avez ajoutés, séparés par des ';'].
+
+[Instructions pas à pas pour la préparation de la recette en une seule ligne, dans l'ordre et séparées par "@"].
+
+N'ajoutez pas plus de texte que ce qui est demandé.</value>
+  </data>
+</root>
