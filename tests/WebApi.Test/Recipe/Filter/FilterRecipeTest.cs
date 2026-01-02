@@ -37,7 +37,7 @@ public class FilterRecipeTest : MyRecipeBookClassFixture
             CookingTimes = [(MyRecipeBook.Communication.Enums.CookingTime)_recipeCookingTime],
             Difficulties =  [(MyRecipeBook.Communication.Enums.Difficulty)_recipeDifficultyLevel],
             DishTypes = _recipeDishTypes.Select(dishType => (MyRecipeBook.Communication.Enums.DishType)dishType).ToList(),
-            RecipeTitile_Ingredient = _recipeTitle
+            RecipeTitle_Ingredient = _recipeTitle
         };
         var token = JwtTokenGeneratorBuilder.Build().Generate(_userIdentifier);
 
@@ -56,7 +56,7 @@ public class FilterRecipeTest : MyRecipeBookClassFixture
     public async Task Success_NoContent()
     {
         var request = RequestFilterRecipeJsonBuilder.Build();
-        request.RecipeTitile_Ingredient = "emptyRecipe";
+        request.RecipeTitle_Ingredient = "emptyRecipe";
         
         var token = JwtTokenGeneratorBuilder.Build().Generate(_userIdentifier);
 

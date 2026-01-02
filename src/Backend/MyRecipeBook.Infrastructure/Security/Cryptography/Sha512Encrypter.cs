@@ -21,6 +21,7 @@ public class Sha512Encrypter : IPasswordEncrypter
         return StringBytes(hashBytes);
     }
 
+
     private static string StringBytes(byte[] bytes)
     {
         var sb = new StringBuilder();

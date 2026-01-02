@@ -50,10 +50,13 @@ public class DoLoginUseCaseTest
         var passwordEncrypter = PasswordEncrypterBuilder.Build();
         var userReadOnlyRepositoryBuilder = new UserReadOnlyRepositoryBuilder();
         var accessTokenGenerator = JwtTokenGeneratorBuilder.Build();
-        
+        var refreshTokenGenerator = RefreshTokenGeneratorBuilder.Build();
+        var unitOfWork = UnitOfWorkBuilder.Build();
+        var tokenRepository = new TokenRepositoryBuilder().Build();
+
         if (user is not null)
-            userReadOnlyRepositoryBuilder.GetByEmailAndPassword(user);
-        
-        return new DoLoginUseCase(userReadOnlyRepositoryBuilder.Build(), passwordEncrypter,accessTokenGenerator);
+            userReadOnlyRepositoryBuilder.GetByEmail(user);
+
+        return new DoLoginUseCase(userReadOnlyRepositoryBuilder.Build(), accessTokenGenerator, passwordEncrypter, refreshTokenGenerator, tokenRepository, unitOfWork);
     }
 }

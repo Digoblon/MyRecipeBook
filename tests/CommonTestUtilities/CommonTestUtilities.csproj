@@ -27,4 +27,16 @@
       <PackageReference Include="Sqids" Version="3.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Files\FilePng.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Files\FileJpg.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Files\FileText.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

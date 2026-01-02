@@ -15,10 +15,11 @@ public class UserReadOnlyRepositoryBuilder
         _repository.Setup(repository => repository.ExistActiveUserWithEmail(email)).ReturnsAsync(true);
     }
     
-    public void GetByEmailAndPassword(User user)
+    public void GetByEmail(User user)
     {
-        _repository.Setup(repository => repository.GetByEmailAndPassword(user.Email, user.Password)).ReturnsAsync(user);
+        _repository.Setup(repository => repository.GetByEmail(user.Email)).ReturnsAsync(user);
     }
+
     
     public IUserReadOnlyRepository Build() =>  _repository.Object;
 }

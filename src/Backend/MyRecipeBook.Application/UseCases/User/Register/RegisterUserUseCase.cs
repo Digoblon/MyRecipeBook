@@ -4,7 +4,9 @@ using MyRecipeBook.Application.Services.AutoMapper;
 using MyRecipeBook.Application.Services.Cryptography;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
+using MyRecipeBook.Domain.Entities;
 using MyRecipeBook.Domain.Repositories;
+using MyRecipeBook.Domain.Repositories.Token;
 using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Domain.Security.Cryptography;
 using MyRecipeBook.Domain.Security.Tokens;
@@ -16,53 +18,72 @@ namespace MyRecipeBook.Application.UseCases.User.Register;
 
 public class RegisterUserUseCase : IRegisterUserUseCase
 {
+    private readonly IUserWriteOnlyRepository _writeOnlyRepository;
     private readonly IUserReadOnlyRepository _readOnlyRepository;
-    private readonly IUserWriteOnlyRepository  _writeOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IPasswordEncrypter _passwordEncrypter;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
+    private readonly IPasswordEncrypter _passwordEncrypter;
+    private readonly ITokenRepository _tokenRepository;
+    private readonly IRefreshTokenGenerator _refreshTokenGenerator;
 
-    public RegisterUserUseCase(IUserReadOnlyRepository readOnlyRepository, 
-        IUserWriteOnlyRepository  writeOnlyRepository, 
-        IPasswordEncrypter passwordEncrypter,
+    public RegisterUserUseCase(
+        IUserWriteOnlyRepository writeOnlyRepository,
+        IUserReadOnlyRepository readOnlyRepository,
         IUnitOfWork unitOfWork,
+        IPasswordEncrypter passwordEncrypter,
+        IAccessTokenGenerator accessTokenGenerator,
         IMapper mapper,
-        IAccessTokenGenerator accessTokenGenerator)
+        ITokenRepository tokenRepository,
+        IRefreshTokenGenerator refreshTokenGenerator)
     {
-        _readOnlyRepository = readOnlyRepository;
         _writeOnlyRepository = writeOnlyRepository;
+        _readOnlyRepository = readOnlyRepository;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
         _passwordEncrypter = passwordEncrypter;
+        _unitOfWork = unitOfWork;
         _accessTokenGenerator = accessTokenGenerator;
+        _refreshTokenGenerator = refreshTokenGenerator;
+        _tokenRepository = tokenRepository;
     }
     
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
     {
-        
-        //validar a request
         await Validate(request);
-        
-        
-        //mapear a request em uma entidade
+
         var user = _mapper.Map<Domain.Entities.User>(request);
         user.Password = _passwordEncrypter.Encrypt(request.Password);
-        user.UserIdentifier = Guid.NewGuid();
-        
-        //salvar no banco de dados
+
         await _writeOnlyRepository.Add(user);
+
         await _unitOfWork.Commit();
-        
-        
+
+        var refreshToken = await CreateAndSaveRefreshToken(user);
+
         return new ResponseRegisteredUserJson
         {
-            Name = request.Name,
-            Tokens =  new ResponseTokensJson
+            Name = user.Name,
+            Tokens = new ResponseTokensJson
             {
-                AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+                AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier),
+                RefreshToken = refreshToken
             }
         };
+    }
+
+    private async Task<string> CreateAndSaveRefreshToken(Domain.Entities.User user)
+    {
+        var refreshToken = _refreshTokenGenerator.Generate();
+
+        await _tokenRepository.SaveNewRefreshToken(new RefreshToken
+        {
+            Value = refreshToken,
+            UserId = user.Id
+        });
+
+        await _unitOfWork.Commit();
+
+        return refreshToken;
     }
 
     private async Task Validate(RequestRegisterUserJson request)

@@ -4,7 +4,7 @@ using MyRecipeBook.Domain.Repositories.User;
 
 namespace MyRecipeBook.Infrastructure.DataAccess.Repositories;
 
-public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository, IUserUpdateOnlyRepository
+public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository, IUserUpdateOnlyRepository, IUserDeleteOnlyRepository
 {
     private readonly MyRecipeBookDbContext _dbContext;
 
@@ -32,6 +32,13 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository,
             .FirstOrDefaultAsync(user => user.Active && user.Email.Equals(email) && user.Password.Equals(password));
     }
 
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(user => user.Active && user.Email.Equals(email));
+    }
+
     public async Task<User> GetById(long id)
     {
         return await _dbContext
@@ -40,4 +47,17 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository,
     }
 
     public void Update(User user) => _dbContext.Users.Update(user);
+    public async Task DeleteAccount(Guid userIdentifier)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.UserIdentifier == userIdentifier);
+        
+        if(user is null)
+            return;
+
+        var recipes = _dbContext.Recipes.Where(r => r.UserId == user.Id);
+        
+        _dbContext.Recipes.RemoveRange(recipes);
+        
+        _dbContext.Users.Remove(user);
+    }
 }
