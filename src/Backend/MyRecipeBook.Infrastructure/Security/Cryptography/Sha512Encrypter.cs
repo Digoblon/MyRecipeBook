@@ -21,6 +21,11 @@ public class Sha512Encrypter : IPasswordEncrypter
         return StringBytes(hashBytes);
     }
 
+    public bool IsValid(string password, string passwordHash)
+    {
+        throw new NotImplementedException();
+    }
+
 
     private static string StringBytes(byte[] bytes)
     {

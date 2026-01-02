@@ -55,6 +55,7 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>ResourceOpenAI.fr.resx</DependentUpon>
       </Compile>
+      <Compile Remove="Security\Cryptography\Sha512Encrypter.cs" />
     </ItemGroup>
 
 </Project>
